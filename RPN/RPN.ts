@@ -78,7 +78,7 @@ class Stack<T>{
 // let r1 = rl.createInterface(process.stdin, process.stdout);
 
 let exprN = 23+3;
-let exprS = "(2+3)*6";
+let exprS = "((3%2)^(60+20))*700";
 console.log(ConvertInToPo(exprS));
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -93,7 +93,14 @@ function ConvertInToPo(expr){
     while (infixQ.length != 0){
         let t = infixQ.peek; infixQ.dequeue();
         if(isNaN(Number(t)) == false){
-            postQ.enqueue(t);
+            if (isNaN(Number(infixQ.peek)) && infixQ.peek != "(" && infixQ.peek != ")" && infixQ.peek != null){
+                postQ.enqueue(t);
+                postQ.enqueue(" ");
+            }
+            else {
+                postQ.enqueue(t);
+            }
+
         }
         else if (opStack.length == 0){
             opStack.push(t);
@@ -116,7 +123,6 @@ function ConvertInToPo(expr){
             }
         opStack.push(t);
         }
-        console.log(opStack);
     }
     while (opStack.length != 0){
         postQ.enqueue(opStack.peek);
@@ -132,7 +138,7 @@ function Precedence(operator){
     if(operator == "+" || operator == "-"){
         return 0;
     }
-    if(operator == "*" || operator == "/"){
+    if(operator == "*" || operator == "/" || operator == "%"){
         return 1;
     }
     if(operator == "^"){
