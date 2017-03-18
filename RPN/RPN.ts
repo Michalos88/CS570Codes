@@ -74,9 +74,25 @@ class Stack<T>{
 // let r1 = rl.createInterface(process.stdin, process.stdout);
 
 let exprN = 23+3;
-let exprS = ""+23+3;
+let exprS = "23+3";
+
+function ConvertInToPo(expr){
+    let opStack = new Stack<string>();
+    let infixQ = new Queue<string>();
+    let postQ = new Queue<string>();
+    let exprSplit = expr.split("");
+    for (let i = 0;i < exprSplit.length; i++){
+        infixQ.enqueue(exprSplit[i]);
+    }
+    return infixQ;
+    // while (infixQ.length != 0){
+    //
+    // }
+    //
+    //
 
 
+}
 
 
 
