@@ -69,8 +69,6 @@ class Stack<T>{
 
     public get peek(): T {return this.arr[this.arr.length - 1];}
 
-    public get top(): T {return this.arr[0]}
-
     public get length() {return this.arr.length;}
 
     public clean() {this.arr = [];}
@@ -80,7 +78,7 @@ class Stack<T>{
 // let r1 = rl.createInterface(process.stdin, process.stdout);
 
 let exprN = 23+3;
-let exprS = "2+3";
+let exprS = "(2+3)*6";
 console.log(ConvertInToPo(exprS));
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -104,23 +102,24 @@ function ConvertInToPo(expr){
             opStack.push(t);
         }
         else if (t == ")" ){
-            while (opStack.top != "("){
-                postQ.enqueue(opStack.top);
+            while (opStack.peek != "("){
+                postQ.enqueue(opStack.peek);
                 opStack.pop();
             }
             opStack.pop();
         }
         else{
-            while (opStack.length != 0 && opStack.top !="("
-                && Precedence(t) <= Precedence(opStack.top) ){
-                postQ.enqueue(opStack.top);
+            while (opStack.length != 0 && opStack.peek !="("
+                && Precedence(t) <= Precedence(opStack.peek) ){
+                postQ.enqueue(opStack.peek);
                 opStack.pop();
             }
         opStack.push(t);
         }
+        console.log(opStack);
     }
     while (opStack.length != 0){
-        postQ.enqueue(opStack.top);
+        postQ.enqueue(opStack.peek);
         opStack.pop();
     }
 
