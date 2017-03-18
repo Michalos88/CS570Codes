@@ -42,6 +42,10 @@ class Queue<T>{
         return this.arr[0];
     }
 
+    public get end():T {
+        return this.arr[this.arr.length-1];
+    }
+
 
     public get length() {return this.arr.length;}
 
@@ -84,13 +88,17 @@ function ConvertInToPo(expr){
     for (let i = 0;i < exprSplited.length; i++){
         infixQ.enqueue(exprSplited[i]);
     }
-    let t = infixQ.peek;
-    infixQ.dequeue();
+    let t = infixQ.peek; infixQ.dequeue();
 
-    return t;
-    // while (infixQ.length != 0){
-    //
-    // }
+    while (infixQ.length != 0){
+        if(isNaN(Number(t)) == false){
+            postQ.enqueue(t);
+        }
+        else if (opStack.length == 0){
+            opStack.push(t);
+        }
+        else if (){}
+    }
 
 
 
