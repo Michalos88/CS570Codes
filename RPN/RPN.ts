@@ -38,7 +38,7 @@ class Queue<T>{
     }
 
 
-    public peek(): T {
+    public get peek(): T {
         return this.arr[0];
     }
 
@@ -75,21 +75,24 @@ class Stack<T>{
 
 let exprN = 23+3;
 let exprS = "23+3";
-
+console.log(ConvertInToPo(exprS));
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
     let infixQ = new Queue<string>();
     let postQ = new Queue<string>();
-    let exprSplit = expr.split("");
-    for (let i = 0;i < exprSplit.length; i++){
-        infixQ.enqueue(exprSplit[i]);
+    let exprSplited = expr.split("");
+    for (let i = 0;i < exprSplited.length; i++){
+        infixQ.enqueue(exprSplited[i]);
     }
-    return infixQ;
+    let t = infixQ.peek;
+    infixQ.dequeue();
+
+    return t;
     // while (infixQ.length != 0){
     //
     // }
-    //
-    //
+
+
 
 
 }
