@@ -92,6 +92,8 @@ function ConvertInToPo(expr){
     }
     let t = infixQ.peek; infixQ.dequeue();
 
+
+
     while (infixQ.length != 0){
         if(isNaN(Number(t)) == false){
             postQ.enqueue(t);
@@ -103,11 +105,31 @@ function ConvertInToPo(expr){
             opStack.push(t);
         }
         else if (t ==")" ){
-            while (opStack.peek())
+            while (opStack.top != "("){
+                postQ.enqueue(opStack.top);
+                opStack.pop();
+            }
+            opStack.pop();
+        }
+        else{
+            while (opStack.length != 0 && opStack.top !="("
+                &&  ){
+
+            }
         }
     }
 
-
+    function Precedence(operator){
+        if(operator == "+" || operator == "-"){
+            return 0;
+        }
+        if(operator == "*" || operator == "/"){
+            return 1;
+        }
+        if(operator == "^"){
+            return 2;
+        }
+    }
 
 
 }
