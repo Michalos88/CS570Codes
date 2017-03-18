@@ -80,7 +80,7 @@ class Stack<T>{
 // let r1 = rl.createInterface(process.stdin, process.stdout);
 
 let exprN = 23+3;
-let exprS = "23+3";
+let exprS = "2+3";
 console.log(ConvertInToPo(exprS));
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -90,11 +90,10 @@ function ConvertInToPo(expr){
     for (let i = 0;i < exprSplited.length; i++){
         infixQ.enqueue(exprSplited[i]);
     }
-    let t = infixQ.peek; infixQ.dequeue();
-
 
 
     while (infixQ.length != 0){
+        let t = infixQ.peek; infixQ.dequeue();
         if(isNaN(Number(t)) == false){
             postQ.enqueue(t);
         }
@@ -104,7 +103,7 @@ function ConvertInToPo(expr){
         else if (t == "("){
             opStack.push(t);
         }
-        else if (t ==")" ){
+        else if (t == ")" ){
             while (opStack.top != "("){
                 postQ.enqueue(opStack.top);
                 opStack.pop();
@@ -113,28 +112,34 @@ function ConvertInToPo(expr){
         }
         else{
             while (opStack.length != 0 && opStack.top !="("
-                &&  ){
-
+                && Precedence(t) <= Precedence(opStack.top) ){
+                postQ.enqueue(opStack.top);
+                opStack.pop();
             }
+        opStack.push(t);
         }
     }
-
-    function Precedence(operator){
-        if(operator == "+" || operator == "-"){
-            return 0;
-        }
-        if(operator == "*" || operator == "/"){
-            return 1;
-        }
-        if(operator == "^"){
-            return 2;
-        }
+    while (opStack.length != 0){
+        postQ.enqueue(opStack.top);
+        opStack.pop();
     }
 
+
+    return postQ;
 
 }
 
-
+function Precedence(operator){
+    if(operator == "+" || operator == "-"){
+        return 0;
+    }
+    if(operator == "*" || operator == "/"){
+        return 1;
+    }
+    if(operator == "^"){
+        return 2;
+    }
+}
 
 
 // let Eval = new Stack<number>();
