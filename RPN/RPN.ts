@@ -67,7 +67,9 @@ class Stack<T>{
 
     public pop(): T {return this.arr.pop();}
 
-    public peek(): T {return this.arr[this.arr.length - 1];}
+    public get peek(): T {return this.arr[this.arr.length - 1];}
+
+    public get top(): T {return this.arr[0]}
 
     public get length() {return this.arr.length;}
 
