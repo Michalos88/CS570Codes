@@ -97,7 +97,12 @@ function ConvertInToPo(expr){
         else if (opStack.length == 0){
             opStack.push(t);
         }
-        else if (){}
+        else if (t == "("){
+            opStack.push(t);
+        }
+        else if (t ==")" ){
+            while (opStack.peek())
+        }
     }
 
 
