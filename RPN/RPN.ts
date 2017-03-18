@@ -78,7 +78,7 @@ class Stack<T>{
 // let r1 = rl.createInterface(process.stdin, process.stdout);
 
 let exprN = 23+3;
-let exprS = "((3%2)^(60+20))*700";
+let exprS = "(3+4/2)*(5*3-6)-8";
 console.log(ConvertInToPo(exprS));
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -142,19 +142,41 @@ function Precedence(operator){
         return 1;
     }
     if(operator == "^"){
+        //TODO: Have to change ^ to POW
         return 2;
     }
 }
 
+function Solve(Q){
+    let Eval = new Stack<number>();
 
-// let Eval = new Stack<number>();
-// let postQ = new Queue<string>();
-//
-// while(postQ.length>0){
-//     let t = postQ.F
-//     postQ.dequeue();
-//     if()
-// }
+    while(Q.length != 0){
+        let t = Q.peek;
+        Q.dequeue();
+        if(isNaN(Number(t)) == false){
+           Eval.push(t);
+        }
+        else {
+            let TopNum = Eval.peek;
+            Eval.pop();
+            let nextNum = Eval.peek;
+            Eval.pop();
+            let answ;
+            switch (t) {
+                case "+": answ = nextNum + TopNum; break;
+                case "-": answ = nextNum - TopNum; break;
+                case "*": answ = nextNum * TopNum; break;
+                case "/": answ = nextNum / TopNum; break;
+                case "^": answ = Math.pow(nextNum,TopNum); break;
+
+
+            }
+            Eval.push(answ);
+
+        }
+    }
+    return Eval.peek
+}
 
 
 
