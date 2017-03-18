@@ -10,39 +10,45 @@ class Queue<T>{
         this.arr = arr || [];
     }
 
-    /**
-     * enqueue
-     */
     public enqueue(value: T) {
         this.arr.push(value);
     }
 
-    /**
-     * dequeue
-     */
     public dequeue(): T {
         return this.arr.shift();
     }
 
-    /**
-     * peek
-     */
+
     public peek(): T {
         return this.arr[0];
     }
 
-    /**
-     * get length
-     */
-    public get length() {
-        return this.arr.length;
+
+    public get length() {return this.arr.length;}
+
+    public clean() {this.arr = [];}
+}
+
+class Stack<T>{
+
+    private arr: T[];
+
+    constructor(arr?: T[]) {
+        this.arr = arr || [];
     }
 
-    /**
-     * clean
-     */
-    public clean() {
-        this.arr = [];
+
+    public push(value: T) {
+        this.arr.push(value);
     }
+
+    public pop(): T {return this.arr.pop();}
+
+    public peek(): T {return this.arr[this.arr.length - 1];}
+
+    public get length() {return this.arr.length;}
+
+    public clean() {this.arr = [];}
 
 }
+
