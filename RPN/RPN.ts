@@ -181,13 +181,13 @@ function Solve(Q){
            Eval.push(t);
         }
         else if (t == " "){
-            while (Q.peek != " "){
-                console.log("Q = ",Q.peek);
-                let t2 = Q.peek;
-                let string = string+t2;
+            let string = "";
+            while (isNaN(Number(Q.peek)) == false && Q.peek != " "){
+                string+=Q.peek;
                 Q.dequeue();
                 console.log(string);
             }
+            Eval.push(Number(string));
 
 
         }
