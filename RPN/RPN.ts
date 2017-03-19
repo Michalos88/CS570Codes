@@ -75,15 +75,34 @@ class Stack<T>{
 
 }
 
-// let r1 = rl.createInterface(process.stdin, process.stdout);
+
+// ask();
+//
+// function ask(){
+//     let r1 = rl.createInterface(process.stdin, process.stdout);
+//     r1.question("Please input the equation without spaces or quit (q):\n", input1 => {
+//         if(input1 != "q"){
+//             let converting = ConvertInToPo(input1);
+//             console.log("Converting to Postfix format...\n");
+//             console.log("Postfix Expression: ",converting,"\n");
+//             console.log("Evaluating Expression... \n");
+//             console.log("Result: ", Solve(converting),"\n");
+//             return ask();
+//         }
+//         else if (input1 == "q"){
+//             r1.close();
+//         }
+//     });
+//
+// }
 
 
-let exprS = "((3+4/2)%(5*3-6)-8*(2+3/2))";
-// let exprN = ((3+4/2)%(5*3-6)-8*(2+3/2));
-// console.log(exprN);
+let exprS = "(2+(3+3))";
+let exprN = (2+(3+3));
+console.log(exprN);
 let converted = ConvertInToPo(exprS);
 
-// console.log(converted);
+console.log(converted);
 
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -162,7 +181,7 @@ function Solve(Q){
            Eval.push(t);
         }
         else if (t == " "){
-            //Skip
+
         }
         else {
             let TopNum = Number(Eval.peek);
