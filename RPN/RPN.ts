@@ -97,12 +97,12 @@ class Stack<T>{
 // }
 
 
-let exprS = "(2+(34+3))";
-let exprN = (2+(34+3));
+let exprS = "2*3+8-2*(34-2*(3*3))";
+let exprN = 2*3+8-2*(34-2*(3*3));
 console.log(exprN);
 let converted = ConvertInToPo(exprS);
 
-console.log(converted);
+// console.log(converted);
 
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -178,23 +178,25 @@ function Solve(Q){
         let t = Q.peek;
         Q.dequeue();
         if(isNaN(Number(t)) == false && t != " "){
-           Eval.push(t);
+           Eval.push(Number(t));
         }
         else if (t == " "){
-            let string = "";
-            while (isNaN(Number(Q.peek)) == false && Q.peek != " "){
-                string+=Q.peek;
-                Q.dequeue();
-                console.log(string);
+            if (isNaN(Number(Q.peek)) == false){
+                let string = "";
+                while (isNaN(Number(Q.peek)) == false && Q.peek != " "){
+                    string+=Q.peek;
+                    Q.dequeue();
+                }
+                Eval.push(Number(string));
             }
-            Eval.push(Number(string));
-
-
+            else{
+                //skip
+            }
         }
         else {
-            let TopNum = Number(Eval.peek);
+            let TopNum = Eval.peek;
             Eval.pop();
-            let nextNum = Number(Eval.peek);
+            let nextNum = Eval.peek;
             Eval.pop();
             let answ;
             switch (t) {
@@ -208,8 +210,9 @@ function Solve(Q){
 
             }
             Eval.push(answ);
+            // console.log("t=",t);
         }
-
+        // console.log(Eval);
     }
     return Eval.peek
 }
