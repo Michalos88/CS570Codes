@@ -97,8 +97,8 @@ class Stack<T>{
 // }
 
 
-let exprS = "(2+(3+3))";
-let exprN = (2+(3+3));
+let exprS = "(2+(34+3))";
+let exprN = (2+(34+3));
 console.log(exprN);
 let converted = ConvertInToPo(exprS);
 
@@ -181,6 +181,14 @@ function Solve(Q){
            Eval.push(t);
         }
         else if (t == " "){
+            while (Q.peek != " "){
+                console.log("Q = ",Q.peek);
+                let t2 = Q.peek;
+                let string = string+t2;
+                Q.dequeue();
+                console.log(string);
+            }
+
 
         }
         else {
