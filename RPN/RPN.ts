@@ -76,33 +76,44 @@ class Stack<T>{
 }
 
 
-// ask();
+ask();
+
+function ask(){
+    let r1 = rl.createInterface(process.stdin, process.stdout);
+    r1.question("Please input the equation without spaces or quit (q): ", input1 => {
+        if(input1 != "q"){
+            let converting = ConvertInToPo(input1);
+            console.log("Converting to Postfix format...\n");
+            let result = "";
+            let toeval = new Queue<string>();
+            while(converting.length != 0){
+                result+=converting.peek;
+                toeval.enqueue(converting.peek);
+                converting.dequeue();
+
+            }
+            console.log("Postfix Expression: ",result,"\n");
+            console.log("Evaluating Expression... \n");
+            console.log("Result: ", Solve(toeval),"\n");
+
+            r1.close();
+            return ask();
+        }
+        else {
+            r1.close();
+        }
+    });
+
+}
+
+
+// let exprS = "20-30";
+// let exprN = 20-30;
+// console.log(exprN);
+// let converted = ConvertInToPo(exprS);
 //
-// function ask(){
-//     let r1 = rl.createInterface(process.stdin, process.stdout);
-//     r1.question("Please input the equation without spaces or quit (q):\n", input1 => {
-//         if(input1 != "q"){
-//             let converting = ConvertInToPo(input1);
-//             console.log("Converting to Postfix format...\n");
-//             console.log("Postfix Expression: ",converting,"\n");
-//             console.log("Evaluating Expression... \n");
-//             console.log("Result: ", Solve(converting),"\n");
-//             return ask();
-//         }
-//         else if (input1 == "q"){
-//             r1.close();
-//         }
-//     });
-//
-// }
-
-
-let exprS = "2*3+8-2*(34-2*(3*3))";
-let exprN = 2*3+8-2*(34-2*(3*3));
-console.log(exprN);
-let converted = ConvertInToPo(exprS);
-
 // console.log(converted);
+// console.log("Solved =  ",Solve(converted));
 
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -175,10 +186,21 @@ function Solve(Q){
     let Eval = new Stack<number>();
 
     while(Q.length != 0){
+
         let t = Q.peek;
         Q.dequeue();
         if(isNaN(Number(t)) == false && t != " "){
-           Eval.push(Number(t));
+            if (isNaN(Number(Q.peek)) == false && Q.peek != " "){
+                let string ="";
+                string+=t+Q.peek;
+                Q.dequeue();
+                Eval.push(Number(string));
+            }
+            else {
+                Eval.push(Number(t));
+            }
+
+
         }
         else if (t == " "){
             if (isNaN(Number(Q.peek)) == false){
@@ -216,9 +238,6 @@ function Solve(Q){
     }
     return Eval.peek
 }
-
-console.log("Solved =  ",Solve(converted));
-
 
 
 
