@@ -77,10 +77,13 @@ class Stack<T>{
 
 // let r1 = rl.createInterface(process.stdin, process.stdout);
 
-let exprN = 23+3;
-let exprS = "(3+4/2)*(5*3-6)-8";
+
+let exprS = "((3+4/2)%(5*3-6)-8*(2+3/2))";
+// let exprN = ((3+4/2)%(5*3-6)-8*(2+3/2));
+// console.log(exprN);
 let converted = ConvertInToPo(exprS);
-console.log(converted);
+
+// console.log(converted);
 
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
@@ -159,7 +162,7 @@ function Solve(Q){
            Eval.push(t);
         }
         else if (t == " "){
-            continue
+            //Skip
         }
         else {
             let TopNum = Number(Eval.peek);
@@ -173,6 +176,7 @@ function Solve(Q){
                 case "*": answ = nextNum * TopNum; break;
                 case "/": answ = nextNum / TopNum; break;
                 case "^": answ = Math.pow(nextNum,TopNum); break;
+                case "%": answ = nextNum % TopNum; break;
 
 
             }
@@ -183,7 +187,7 @@ function Solve(Q){
     return Eval.peek
 }
 
-console.log(Solve(converted));
+console.log("Solved =  ",Solve(converted));
 
 
 
