@@ -79,7 +79,9 @@ class Stack<T>{
 
 let exprN = 23+3;
 let exprS = "(3+4/2)*(5*3-6)-8";
-console.log(ConvertInToPo(exprS));
+let converted = ConvertInToPo(exprS);
+console.log(converted);
+
 function ConvertInToPo(expr){
     let opStack = new Stack<string>();
     let infixQ = new Queue<string>();
@@ -153,13 +155,16 @@ function Solve(Q){
     while(Q.length != 0){
         let t = Q.peek;
         Q.dequeue();
-        if(isNaN(Number(t)) == false){
+        if(isNaN(Number(t)) == false && t != " "){
            Eval.push(t);
         }
+        else if (t == " "){
+            continue
+        }
         else {
-            let TopNum = Eval.peek;
+            let TopNum = Number(Eval.peek);
             Eval.pop();
-            let nextNum = Eval.peek;
+            let nextNum = Number(Eval.peek);
             Eval.pop();
             let answ;
             switch (t) {
@@ -172,12 +177,13 @@ function Solve(Q){
 
             }
             Eval.push(answ);
-
         }
+
     }
     return Eval.peek
 }
 
+console.log(Solve(converted));
 
 
 
