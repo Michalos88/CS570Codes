@@ -192,8 +192,11 @@ function Solve(Q){
         if(isNaN(Number(t)) == false && t != " "){
             if (isNaN(Number(Q.peek)) == false && Q.peek != " "){
                 let string ="";
-                string+=t+Q.peek;
-                Q.dequeue();
+                string+=t;
+                while((isNaN(Number(Q.peek)) == false && Q.peek != " ")){
+                    string+=Q.peek;
+                    Q.dequeue();
+                }
                 Eval.push(Number(string));
             }
             else {
