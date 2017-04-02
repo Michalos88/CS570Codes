@@ -1,9 +1,9 @@
-import construct = Reflect.construct;
+
 /**
  * Created by mlyskawi on 4/2/2017.
  */
 
-class PriorityQueue<T>{
+export class PriorityQueue<T>{
 
     private arr: T[];
 
@@ -15,11 +15,12 @@ class PriorityQueue<T>{
     private object: any;
 
 
-    public enqueue(value: T, priority: T) {
+    public enqueue(value: T, priority: T,) {
 
-        function  Obejct (element, priority){
+        function  Obejct (value, priority){
             this.priority = priority;
-            this.element = element;
+            this.value = value;
+
         }
 
         this.object = new Obejct (value,priority);
@@ -62,9 +63,37 @@ class PriorityQueue<T>{
 
     }
 
-    public dequeue(): T {
-        return this.arr.shift();
-    }
+    private temp :any;
+
+    public dequeue() {
+        this.temp = this.arr.splice(1, 1);
+        let i = 1;
+        let sorting = null;
+        while (sorting != 0) {
+            sorting = 0;
+            if(i < this.arr.length/2){
+                if (this.arr[i].priority > this.arr[2*i].priority){
+                    sorting++;
+                    let a = this.arr[2*i];
+                    this.arr[2*i] = this.arr[i];
+                    this.arr[i] = a;
+                    i = 2*i;
+                }
+                if(i < (this.arr.length/2)-1){
+                    if (this.arr[i].priority > this.arr[2*i+1].priority){
+                        sorting++;
+                        let a = this.arr[2*i+1];
+                        this.arr[2*i+1] = this.arr[i];
+                        this.arr[i] = a;
+                        i = 2*i;
+                    }
+                }
+            }
+        }
+
+
+        return this.temp[0];
+}
 
 
     public get peek(): T {
@@ -80,13 +109,4 @@ class PriorityQueue<T>{
 
     public clean() {this.arr = [];}
 }
-
-
-let cyc = new PriorityQueue();
-cyc.enqueue(6,6);
-cyc.enqueue(3,3);
-cyc.enqueue(5,5);
-cyc.enqueue(5,9);
-
-console.log(cyc);
 
