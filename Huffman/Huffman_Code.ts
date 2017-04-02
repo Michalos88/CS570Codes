@@ -4,7 +4,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-
+import { PriorityQueue } from './PriorityQueue';
 // Write a program that takes any input text and produces both a frequency table and the corresponding Huffman code.
 //
 //     Take approximately 360 words from any English document as your input text. Ignore all blanks, all punctuation marks, all special symbols. Create an input file with this input text.
@@ -32,5 +32,75 @@ import * as path from 'path';
 //
 
 let data = "adsgsefsgi324idsjfsd";
+let dataSplit = data.split("");
+
+console.log(Huffman(dataSplit));
+function Huffman(text){
+
+    let symbol_info = function (symbol,frequency,leaf) {
+        this.symbol = symbol;
+        this.frequency = frequency;
+        this.leaf = leaf;
+    };
+    // let roots = new PriorityQueue();
+
+    let symbols = [];
+
+    for (let i = 0; i < text.length-1;i++){
+        if (symbols.length == 0){
+            let temp = new symbol_info(text[i],1,1);
+            symbols.push(temp);
+        }
+        else{
+            let added = 0;
+            for (let j = 0; j < symbols.length; j++){
+                if (text[i] == symbols[j].symbol){
+                    symbols[j].frequency++;
+                    added++;
+                }
+
+            }
+            if (added == 0){
+                let d = new symbol_info(text[i],1,symbols.length+1);
+                symbols.push(d);
+
+            }
+
+        }
+
+    }
 
 
+    return symbols
+}
+
+
+
+// roots.enqueue(temp,temp.frequency)
+//
+// roots[j].frequency++
+//
+// roots.enqueue(temp,temp.frequency)
+
+// while (adding){
+//     for (var j = 0; j < symbols.length; j++) {
+//         console.log(symbols[j].symbol);
+//         if (text[i] == symbols[j].symbol) {
+//             symbols[j].frequency++;
+//         }
+//
+//     }
+// }
+// }
+// }
+// return symbols;
+// }
+// roots.enqueue(temp,temp.frequency)
+//
+// roots[j].frequency++
+//
+// roots.enqueue(temp,temp.frequency)
+// elseif
+// var temp = new symbol_info(text[i], 1, 1);
+// symbols.push(temp);
+// }

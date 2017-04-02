@@ -108,5 +108,9 @@ export class PriorityQueue<T>{
     public get length() {return this.arr.length;}
 
     public clean() {this.arr = [];}
+
+    public show(i){return this.arr[i]}
+
+
 }
 
