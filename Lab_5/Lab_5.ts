@@ -1,5 +1,5 @@
 /**
- * Created by Michalos on 3/26/2017.
+ * Created by mlyskawi on 3/26/2017.
  */
 
 // Reference: Learning JavaScript Data Structures and Algorithms, by Loiane Groner
@@ -15,7 +15,7 @@ fs.readFile(path.join(__dirname,"infile"+".dat"),"utf-8", (err, file) => {
         let temp = file.split(",");
         let Set = new SortedSet();
         for (let i = 0; i< temp.length; i++){
-             Set.add(temp[i]);
+            Set.add(temp[i]);
         }
 
         let rl = readline.createInterface(process.stdin, process.stdout);
