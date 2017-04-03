@@ -87,48 +87,65 @@ function Huffman(text) {
         let second = Forest.dequeue();
         let parentWeight = least.priority + second.priority;
         let NewTree = new Tree(NewRoot, least, second);
-        // collection.push(NewTree);
-        Forest.enqueue(NewTree, parentWeight)
+        collection.push(NewTree);
+        Forest.enqueue(NewTree.parent, parentWeight)
     }
 
+    // console.log(collection);
     let CharcBits = [];
 
     let character = function (charac, bit) {
         this.charac = charac;
         this.bit = bit;
     };
+    let bitL ="";
+    let bitR ="";
+    while (collection.length !=0){
+        let TopRoot1 = collection.pop();
+        convert2bits(TopRoot1,bitL,bitR)
 
-    let TopRoot = Forest.dequeue();
 
-    function convert2bits(TopRoot1) {
-
-        let leftchild = TopRoot1.value.left;
-        let rightchild = TopRoot1.value.right;
-
-        CharcBits.push(new character(leftchild,0));
-        CharcBits.push(new character(rightchild,1));
-
-        // if(typeof (leftchild) == "object"){
-        //     convert2bits(leftchild)
-        // }
-        // else{
-        //     collection.push(leftchild)
-        // }
-        //
-        // if(typeof (rightchild) == "object"){
-        //     convert2bits(rightchild)
-        // }
-        // else{
-        //     collection.push(rightchild)
-        // }
-        //
-        // console.log(collection);
-        //
-        //
-        // return CharcBits
     }
 
-    return convert2bits(TopRoot)
+    function bitofparent(arr,family){
+        for (let i = 0; i < arr.length;i++){
+            if (arr[i].charac == family){
+                return arr[i].bit
+            }
+
+
+        }
+    }
+
+    function convert2bits(TopRoot,bitl,bitr) {
+
+        let parent = TopRoot.parent;
+        let leftchild = TopRoot.left.value;
+        let rightchild = TopRoot.right.value;
+
+
+        if (CharcBits.length == 0){
+            bitl =bitl+0;
+            bitr =bitr+1;
+            CharcBits.push(new character(leftchild,bitl));
+            CharcBits.push(new character(rightchild,bitr));
+        }
+        else{
+
+
+            bitl = bitofparent(CharcBits,parent)+0;
+            bitr = bitofparent(CharcBits,parent)+1;
+            CharcBits.push(new character(leftchild,bitl));
+            CharcBits.push(new character(rightchild,bitr));
+        }
+
+
+    }
+
+
+
+
+    return CharcBits
 
 
 }
