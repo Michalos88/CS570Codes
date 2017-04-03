@@ -44,15 +44,15 @@ export class PriorityQueue<T>{
                         this.arr[i] = temp;
                         i = Math.floor(i/2);
                     }
-                    // if (i != 1){
-                    //     if (this.arr[i].priority < this.arr[i-1].priority){
-                    //         sorting++;
-                    //         let temp = this.arr[i-1];
-                    //         this.arr[i-1] = this.arr[i];
-                    //         this.arr[i] = temp;
-                    //         i = i-1;
-                    //     }
-                // }
+                    if (i != 1){
+                        if (this.arr[i].priority < this.arr[i-1].priority){
+                            sorting++;
+                            let temp = this.arr[i-1];
+                            this.arr[i-1] = this.arr[i];
+                            this.arr[i] = temp;
+                            i = i-1;
+                        }
+                }
                 }
 
 

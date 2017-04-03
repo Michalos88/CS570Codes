@@ -33,7 +33,6 @@ import { PriorityQueue } from './PriorityQueue';
 
 let data = "adsgsefsgi324idsjfsd";
 let dataSplit = data.split("");
-
 console.log(Huffman(dataSplit));
 function Huffman(text) {
 
@@ -44,8 +43,9 @@ function Huffman(text) {
     };
     let Forest = new PriorityQueue();
 
+
     let Aplhabet = [];
-    let collection = [];
+    let Trees = [];
 
     for (let i = 0; i < text.length - 1; i++) {
         if (Aplhabet.length == 0) {
@@ -72,8 +72,10 @@ function Huffman(text) {
     }
 
     for (let i = 0; i < Aplhabet.length; i++) {
-        Forest.enqueue(Aplhabet[i].leaf, Aplhabet[i].frequency)
+        Forest.enqueue(Aplhabet[i].leaf, Aplhabet[i].frequency);
+
     }
+
 
     let Tree = function (parent, left, right) {
         this.parent = parent;
@@ -87,11 +89,11 @@ function Huffman(text) {
         let second = Forest.dequeue();
         let parentWeight = least.priority + second.priority;
         let NewTree = new Tree(NewRoot, least, second);
-        collection.push(NewTree);
+        Trees.push(NewTree);
         Forest.enqueue(NewTree.parent, parentWeight)
     }
 
-    // console.log(collection);
+
     let CharcBits = [];
 
     let character = function (charac, bit) {
@@ -100,8 +102,8 @@ function Huffman(text) {
     };
     let bitL ="";
     let bitR ="";
-    while (collection.length !=0){
-        let TopRoot1 = collection.pop();
+    while (Trees.length !=0){
+        let TopRoot1 = Trees.pop();
         convert2bits(TopRoot1,bitL,bitR)
 
 
@@ -142,32 +144,52 @@ function Huffman(text) {
     }
 
 
-    function HuffmanTable(arr,characters,){
+    function HuffmanTable(arr,characters){
         let NewTable = [];
+        let FrTable = [];
         for (let i = 0; i < arr.length;i++){
             for (let j = 0; j < characters.length;j++){
                 if (arr[i].charac == characters[j].leaf){
                     NewTable.push(characters[j].symbol);
                     NewTable.push(arr[i].bit);
+                    FrTable.push(characters[j].symbol);
+                    FrTable.push((characters[j].frequency)/text.length*100);
                 }
             }
 
 
-
         }
+
+        // Huffman Table
         let output ="Symbol	Huffman Codes\n";
         let spaces1 = "  ";
 
         let comma  =",";
         let spaces2 = "        ";
 
+
         for (let i = 0; i < NewTable.length;i=i+2){
             output=output+spaces1+NewTable[i]+comma+spaces2+NewTable[i+1]+"\n";
 
         }
 
-        return output
+        // Frequency Table
+        let outputFR ="Symbol	Frequency\n";
+
+        for (let i = 0; i < FrTable.length; i=i+2){
+            outputFR=outputFR+spaces1+FrTable[i]+comma+spaces2+FrTable[i+1]+"%"+"\n";
+                }
+
+        let totalBits = 0;
+        for (let i = 1; i < FrTable.length-1; i=i+2) {
+
+            totalBits=totalBits+Number(FrTable[i])*text.length/100+NewTable[i].length;
+            }
+
+
+        return outputFR+"   \n"+output+"   \n"+" Total Bits: "+totalBits
     }
+
 
 
     return HuffmanTable(CharcBits,Aplhabet)
