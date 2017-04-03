@@ -35,34 +35,35 @@ let data = "adsgsefsgi324idsjfsd";
 let dataSplit = data.split("");
 
 console.log(Huffman(dataSplit));
-function Huffman(text){
+function Huffman(text) {
 
-    let symbol_info = function (symbol,frequency,leaf) {
+    let symbol_info = function (symbol, frequency, leaf) {
         this.symbol = symbol;
         this.frequency = frequency;
         this.leaf = leaf;
     };
-    // let roots = new PriorityQueue();
+    let Forest = new PriorityQueue();
 
-    let symbols = [];
+    let Aplhabet = [];
+    let collection = [];
 
-    for (let i = 0; i < text.length-1;i++){
-        if (symbols.length == 0){
-            let temp = new symbol_info(text[i],1,1);
-            symbols.push(temp);
+    for (let i = 0; i < text.length - 1; i++) {
+        if (Aplhabet.length == 0) {
+            let temp = new symbol_info(text[i], 1, 1);
+            Aplhabet.push(temp);
         }
-        else{
+        else {
             let added = 0;
-            for (let j = 0; j < symbols.length; j++){
-                if (text[i] == symbols[j].symbol){
-                    symbols[j].frequency++;
+            for (let j = 0; j < Aplhabet.length; j++) {
+                if (text[i] == Aplhabet[j].symbol) {
+                    Aplhabet[j].frequency++;
                     added++;
                 }
 
             }
-            if (added == 0){
-                let d = new symbol_info(text[i],1,symbols.length+1);
-                symbols.push(d);
+            if (added == 0) {
+                let d = new symbol_info(text[i], 1, Aplhabet.length + 1);
+                Aplhabet.push(d);
 
             }
 
@@ -70,8 +71,66 @@ function Huffman(text){
 
     }
 
+    for (let i = 0; i < Aplhabet.length; i++) {
+        Forest.enqueue(Aplhabet[i].leaf, Aplhabet[i].frequency)
+    }
 
-    return symbols
+    let Tree = function (parent, left, right) {
+        this.parent = parent;
+        this.left = left;
+        this.right = right;
+    };
+    let NewRoot = Forest.length;
+    while (Forest.length != 2) {
+        NewRoot++;
+        let least = Forest.dequeue();
+        let second = Forest.dequeue();
+        let parentWeight = least.priority + second.priority;
+        let NewTree = new Tree(NewRoot, least, second);
+        // collection.push(NewTree);
+        Forest.enqueue(NewTree, parentWeight)
+    }
+
+    let CharcBits = [];
+
+    let character = function (charac, bit) {
+        this.charac = charac;
+        this.bit = bit;
+    };
+
+    let TopRoot = Forest.dequeue();
+
+    function convert2bits(TopRoot1) {
+
+        let leftchild = TopRoot1.value.left;
+        let rightchild = TopRoot1.value.right;
+
+        CharcBits.push(new character(leftchild,0));
+        CharcBits.push(new character(rightchild,1));
+
+        // if(typeof (leftchild) == "object"){
+        //     convert2bits(leftchild)
+        // }
+        // else{
+        //     collection.push(leftchild)
+        // }
+        //
+        // if(typeof (rightchild) == "object"){
+        //     convert2bits(rightchild)
+        // }
+        // else{
+        //     collection.push(rightchild)
+        // }
+        //
+        // console.log(collection);
+        //
+        //
+        // return CharcBits
+    }
+
+    return convert2bits(TopRoot)
+
+
 }
 
 
