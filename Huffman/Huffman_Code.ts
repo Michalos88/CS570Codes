@@ -132,7 +132,6 @@ function Huffman(text) {
         }
         else{
 
-
             bitl = bitofparent(CharcBits,parent)+0;
             bitr = bitofparent(CharcBits,parent)+1;
             CharcBits.push(new character(leftchild,bitl));
@@ -143,9 +142,35 @@ function Huffman(text) {
     }
 
 
+    function HuffmanTable(arr,characters,){
+        let NewTable = [];
+        for (let i = 0; i < arr.length;i++){
+            for (let j = 0; j < characters.length;j++){
+                if (arr[i].charac == characters[j].leaf){
+                    NewTable.push(characters[j].symbol);
+                    NewTable.push(arr[i].bit);
+                }
+            }
 
 
-    return CharcBits
+
+        }
+        let output ="Symbol	Huffman Codes\n";
+        let spaces1 = "  ";
+
+        let comma  =",";
+        let spaces2 = "        ";
+
+        for (let i = 0; i < NewTable.length;i=i+2){
+            output=output+spaces1+NewTable[i]+comma+spaces2+NewTable[i+1]+"\n";
+
+        }
+
+        return output
+    }
+
+
+    return HuffmanTable(CharcBits,Aplhabet)
 
 
 }
