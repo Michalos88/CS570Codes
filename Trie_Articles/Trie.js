@@ -18,35 +18,74 @@ class Trie {
         this.words = text.split(" ");
         for (let i = 0; i < this.words.length; i++) {
             this.word = this.words[i].split("");
-            for (let j = 0; j < this.word.length; j++) {
-                if (j == 0) {
-                    if (this.main_node.child == null) {
-                        let temp = new node();
-                        temp.symbol = this.word[j];
-                        temp.child = this.word[j + 1];
-                        temp.next = null;
-                        this.main_node.child = temp;
-                    }
-                    else {
-                        let temp = this.main_node.child;
-                        let checking = true;
-                        while (checking) {
-                            if (temp.symbol == this.word[j]) {
-                                checking = false;
-                                console.log(i, "  same");
-                            }
-                            else if (temp.next == null) {
-                                let node1 = new node();
-                                node1.symbol = this.word[j];
-                                node1.child = null;
-                                node1.next = null;
-                                temp.next = node1;
-                                checking = false;
-                            }
-                            else {
-                                temp = temp.next;
+            if (this.main_node.child == null) {
+                let temp = new node();
+                temp.symbol = this.word[0];
+                temp.child = null;
+                temp.next = null;
+                this.main_node.child = temp;
+            }
+            else {
+                let temp = this.main_node.child;
+                let checking = true;
+                while (checking) {
+                    if (temp.symbol == this.word[0]) {
+                        let temp2 = temp.child;
+                        for (let j = 1; j < this.word.length; j++) {
+                            let checking2 = true;
+                            while (checking2) {
+                                if (temp2 == null) {
+                                    let node2 = new node();
+                                    node2.symbol = this.word[j];
+                                    node2.child = null;
+                                    node2.next = null;
+                                    temp2 = node2;
+                                    temp2 = temp2.child;
+                                    checking2 = false;
+                                }
+                                else if (temp2.symbol == this.word[j]) {
+                                    temp2 = temp2.child;
+                                    checking2 = false;
+                                }
+                                else {
+                                    temp2 = temp2.next;
+                                }
                             }
                         }
+                        checking = false;
+                    }
+                    else if (temp.next == null) {
+                        let node1 = new node();
+                        node1.symbol = this.word[0];
+                        node1.child = null;
+                        node1.next = null;
+                        temp.next = node1;
+                        let temp2 = temp.next.child;
+                        for (let j = 1; j < this.word.length; j++) {
+                            let checking2 = true;
+                            while (checking2) {
+                                if (temp2 == null) {
+                                    let node2 = new node();
+                                    node2.symbol = this.word[j];
+                                    node2.child = null;
+                                    node2.next = null;
+                                    temp2 = node2;
+                                    temp2 = temp2.child;
+                                    checking2 = false;
+                                }
+                                else if (temp2.symbol == this.word[j]) {
+                                    temp2 = temp2.child;
+                                    checking2 = false;
+                                }
+                                else {
+                                    temp2 = temp2.next;
+                                }
+                            }
+                        }
+                        checking = false;
+                    }
+                    else {
+                        temp = temp.next;
                     }
                 }
             }
