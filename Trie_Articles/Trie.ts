@@ -61,7 +61,8 @@ class Trie<T>{
                                        node2.child = null;
                                        node2.next = null;
                                        temp2 = node2;
-                                       temp2 = temp2.child;
+                                       temp.child = temp2;
+                                       temp = temp.child;
                                        checking2 = false;
                                    }
                                    else if (temp2.symbol==this.word[j]){
